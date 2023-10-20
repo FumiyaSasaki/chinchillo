@@ -1,0 +1,199 @@
+.container {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.dice {
+    display: block;
+    position: relative;
+    margin: 50px auto 0;
+    width: 100px;
+    height: 100px;
+    transform-style: preserve-3d;
+    /* transform: rotate3d(-1000, -1000, -1000, 1000deg); */
+    transform: rotateX(500deg) rotateY(-500deg);
+    /* transform:rotateX(-500deg) rotateY(-500deg) rotateZ(720deg); */
+
+    /* animation: rotate-animation 2s linear; */
+
+    animation-fill-mode: forwards;
+    /* animation-iteration-count: 2; */
+}
+
+.dice_anime {
+    animation: rotate-animation 2s linear;
+    animation-fill-mode: forwards;
+}
+
+.dice_anime2 {
+    animation: rotate-animation 2s ease-out;
+    animation-fill-mode: forwards;
+}
+
+.dice .item {
+    position: absolute;
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 10);
+    border-radius: 7px;
+    width: 100%;
+    height: 100%;
+}
+
+/* 1 */
+.dice .item:nth-child(1) {
+    transform: translate3d(0, -50px, 0) rotateX(-90deg);
+    background: url(../images/one_dice.png) no-repeat center center / 100% 100%;
+}
+
+/* 2 */
+.dice .item:nth-child(2) {
+    transform: translate3d(0, 0, -50px);
+    background: url(../images/two_dice.png) no-repeat center center / 100% 100%;
+}
+
+/* 3 */
+.dice .item:nth-child(3) {
+    transform: translate3d(50px, 0, 0) rotateY(90deg);
+    background: url(../images/three_dice.png) no-repeat center center / 100% 100%;
+}
+
+/* 4 */
+.dice .item:nth-child(4) {
+    transform: translate3d(-50px, 0, 0) rotateY(-90deg);
+    background: url(../images/four_dice.png) no-repeat center center / 100% 100%;
+}
+
+/* 5 */
+.dice .item:nth-child(5) {
+    transform: translate3d(0, 0, 50px) rotateY(180deg);
+    background: url(../images/five_dice.png) no-repeat center center / 100% 100%;
+}
+
+/* 6 */
+.dice .item:nth-child(6) {
+    transform: translate3d(0, 50px, 0) rotateX(-90deg);
+    background: url(../images/six_dice.png) no-repeat center center / 100% 100%;
+}
+
+@keyframes rotate-animation {
+    0% {
+        transform: rotate3d(0, 0, 0, 0deg);
+    }
+
+    /* 50% {
+        transform: rotate3d(-1000, -1000, -1000, 0deg);
+    } */
+
+    100% {
+        /* transform: rotate3d(-1000, -1000, -1000, 0deg); */
+        transform: rotateX(500deg) rotateY(-500deg);
+    }
+}
+
+@keyframes rotate-animation2 {
+    from {
+        transform: rotate3d(0);
+    }
+
+    to {
+        transform: rotate3d(-1000, -1000, -1000, 0deg);
+    }
+}
+
+.sphere {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	width: 200px;
+	height: 200px;
+	margin: 5px 15px;
+	border-radius: 50%;
+    /* transform: rotateX(500deg) rotateY(500deg); */
+
+	position: relative;
+	background: transparent;
+	box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 10) inset;
+}
+
+.sphere:after {
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: -20px;
+	margin: auto;
+	width: 90px;
+	height: 4px;
+	border-radius: 50%;
+	background: #000;
+	filter: blur(4px);
+	z-index: -1;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-image: url('../109403972_p0_master1200.jpg');
+    background-size:contain;
+    height: 450px;
+    width: 650px; */
+}
+
+.top_dice_box {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+}
+.bottom_dice_box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.start_button {
+    display: inline-block;
+    padding: 0.8em 3em;
+    background-color: #e3364a; /* 背景色 */
+    box-shadow: 0 5px 0 #ca1c30; /* 影の太さ・色 */
+    border-radius: 60px;
+    border-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none; /* 文字の下線を消す */
+    max-width: 200px;
+    margin-top: 80px;
+  }
+
+ .start_button:active {
+    box-shadow: none;
+    transform: translateY(5px);
+} 
+
+.cpu1,
+.cpu2 {
+     /* border:1px solid #333;
+     padding:10px 50px;
+     border-radius: 4px; */
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     background-image: url('../images/robot.png');
+     width: 300px;
+     height: 300px;
+     background-size:cover;
+}
+.cpu1 div {
+    border:1px solid #333;
+    padding:10px 50px;
+    border-radius: 4px;
+    margin-top: 100px;
+    background-color: white;
+}
