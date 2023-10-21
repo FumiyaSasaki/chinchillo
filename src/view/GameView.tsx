@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { ChinchilloApi } from '../core/chinchilloApi';
@@ -19,6 +19,7 @@ export const GameView = () => {
   const [result, setresult] = useState<number>(0);
   const [cpu1Result, setCpu1Result] = useState<number>(0);
   const [cpu2Result, setCpu2Result] = useState<number>(0);
+  const [gameCount, setGameCount] = useState<number>(0);
 
   const TransformStyles: TransformStyle[] = [
     { transform: `translate3d(0, 50px, 0) rotateX(-90deg)` },
@@ -45,31 +46,38 @@ export const GameView = () => {
     return transformStyles;
   };
 
+  const setDisplayDiceResultForCpu = () => {
+
+  };
+
   const [myPoint, setMyPoint] = useState<number>(10);
   const [latch, setLatch] = useState<number>(1);
   const [resultDiceRollText, setResultDiceRollText] = useState<string>('');
-  const [diceRollcount, setDiceRollCount] = useState<number>(1);
+  const [diceRollcount, setDiceRollCount] = useState<number>(0);
+  const [disabled, setDisabled] = useState<boolean>(false);
 
-  const onPressStartDiceRoll = () => {
+  const onPressDiceRollFirst = () => {
     setResultDiceRollText('');
-    if (diceRollcount === 3) {
-      setDiceRollCount(1);
-    } else {
-      setDiceRollCount(prev => prev + 1);
-    }
+    setDisabled(true);
     const { diceResult, firstDice, secondDice, thirdDice, resultMessage } = ChinchilloApi.getDiceRoll();
-    const cpu1DiceResult: number = ChinchilloApi.getDiceRoll().diceResult.result;
-    const cpu2DiceResult: number = ChinchilloApi.getDiceRoll().diceResult.result;
+    const nowDiceRollcount: number = diceRollcount + 1;
+    const isFirstDiceRoll: boolean = nowDiceRollcount === 1;
+    const isFinishDiceRoll: boolean = nowDiceRollcount === 3 || diceResult.result > 0;
+    const cpu1DiceResult: number = isFirstDiceRoll ? ChinchilloApi.getDiceRoll().diceResult.result : cpu1Result;
+    const cpu2DiceResult: number = isFirstDiceRoll ? ChinchilloApi.getDiceRoll().diceResult.result : cpu2Result;
     const resultNumbers: number[] = [diceResult.result, cpu1DiceResult, cpu2DiceResult];
     const maxDiceResult: number = Math.max(...resultNumbers);
-    setCpu1Result(cpu1DiceResult);
-    setCpu2Result(cpu2DiceResult);
+    setDiceRollCount(isFinishDiceRoll ? 0 : prev => prev + 1);
+    if (nowDiceRollcount === 1) {
+      setCpu1Result(cpu1DiceResult);
+      setCpu2Result(cpu2DiceResult);
+    }
     setFirstDice(getOrderNumbers(firstDice));
     setSecondDice(getOrderNumbers(secondDice));
     setThirdDice(getOrderNumbers(thirdDice));
     setAnimation(`${styles.dice} ${styles.dice_anime2}`);
     setTimeout(() => {
-      if (diceRollcount === 3) {
+      if (isFinishDiceRoll) {
         if (resultNumbers.every(result => result === maxDiceResult)) {
           setResultDiceRollText('引き分け：' + resultMessage);
         } else if (diceResult.result === maxDiceResult) {
@@ -79,17 +87,33 @@ export const GameView = () => {
           setMyPoint(prev => prev - (latch * diceResult.rate));
           setResultDiceRollText('敗北：' + resultMessage);
         }
-        setresult(diceResult.result);
+        setGameCount(prev => prev + 1);
+      } else {
+        setResultDiceRollText('もう一度回してください！');
       }
       setAnimation(`${styles.dice}`);
+      setDisabled(false);
     }, 2000);
+  };
+
+  const onPressRestartGame = () => {
+    setMyPoint(10);
+    setResultDiceRollText('');
+    setGameCount(0);
   };
 
   return (<>
     <div className={styles.container}>
+      {(gameCount === 2 || myPoint <= 0) &&
+        <dialog open className={styles.modal_container}>
+          <p>ゲーム終了しました。</p>
+          <p>最終得点は{myPoint}です</p>
+          <button onClick={onPressRestartGame}>もう一度最初から</button>
+        </dialog>
+      }
       <div className={styles.top_dice_box}>
         <div className={styles.cpu1}>
-          <div className={styles.result}>{cpu1Result}</div>
+          <div className={styles.cpu_result}>{cpu1Result}</div>
         </div>
         <div className={styles.sphere}>
           <div className={animation}>
@@ -102,7 +126,11 @@ export const GameView = () => {
           </div>
         </div>
         <div className={styles.cpu1}>
-          <div className={styles.result}>{cpu2Result}</div>
+          <div className={styles.cpu_result}>
+            <img src="../images/five_dice.png" alt="" />
+            <img src="../images/five_dice.png" alt="" />
+            <img src="../images/five_dice.png" alt="" />
+          </div>
         </div>
       </div>
       <div className={styles.bottom_dice_box}>
@@ -127,13 +155,17 @@ export const GameView = () => {
           </div>
         </div>
       </div>
-      <button className={styles.start_button} onClick={onPressStartDiceRoll}>DICE ROLL</button>
-      <p>{myPoint}</p>
-      <p>{latch}</p>
-      <div>{resultDiceRollText}{diceRollcount}</div>
+      <div className={styles.button_box}>
+        <button className={styles.start_button} onClick={onPressDiceRollFirst} disabled={disabled}>DICE ROLL</button>
+        <button className={styles.start_button} onClick={() => setLatch(prev => prev + 1)} disabled={disabled || myPoint === latch}>UP</button>
+        <button className={styles.start_button} onClick={() => setLatch(prev => prev - 1)} disabled={disabled || latch === 0}>DOWN</button>
+      </div>
+      <p>現在のポイント：{myPoint}</p>
+      <p>賭けポイント：{latch}</p>
+      <div>{resultDiceRollText}</div>
     </div>
-    <button className={styles.start_button} onClick={() => setLatch(prev => prev + 1)}>UP</button>
-    <button className={styles.start_button} onClick={() => setLatch(prev => prev - 1)}>DOWN</button>
+
+
   </>);
 }
 

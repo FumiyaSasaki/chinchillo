@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: row;
-
+    position: relative;
 }
 
 .dice {
@@ -45,37 +45,37 @@
 /* 1 */
 .dice .item:nth-child(1) {
     transform: translate3d(0, -50px, 0) rotateX(-90deg);
-    background: url(../images/one_dice.png) no-repeat center center / 100% 100%;
+    background: url(../../public/images/one_dice.png) no-repeat center center / 100% 100%;
 }
 
 /* 2 */
 .dice .item:nth-child(2) {
     transform: translate3d(0, 0, -50px);
-    background: url(../images/two_dice.png) no-repeat center center / 100% 100%;
+    background: url(../../public/images/two_dice.png) no-repeat center center / 100% 100%;
 }
 
 /* 3 */
 .dice .item:nth-child(3) {
     transform: translate3d(50px, 0, 0) rotateY(90deg);
-    background: url(../images/three_dice.png) no-repeat center center / 100% 100%;
+    background: url(../../public/images/three_dice.png) no-repeat center center / 100% 100%;
 }
 
 /* 4 */
 .dice .item:nth-child(4) {
     transform: translate3d(-50px, 0, 0) rotateY(-90deg);
-    background: url(../images/four_dice.png) no-repeat center center / 100% 100%;
+    background: url(../../public/images/four_dice.png) no-repeat center center / 100% 100%;
 }
 
 /* 5 */
 .dice .item:nth-child(5) {
     transform: translate3d(0, 0, 50px) rotateY(180deg);
-    background: url(../images/five_dice.png) no-repeat center center / 100% 100%;
+    background: url(../../public/images/five_dice.png) no-repeat center center / 100% 100%;
 }
 
 /* 6 */
 .dice .item:nth-child(6) {
     transform: translate3d(0, 50px, 0) rotateX(-90deg);
-    background: url(../images/six_dice.png) no-repeat center center / 100% 100%;
+    background: url(../../public/images/six_dice.png) no-repeat center center / 100% 100%;
 }
 
 @keyframes rotate-animation {
@@ -107,33 +107,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-	width: 200px;
-	height: 200px;
-	margin: 5px 15px;
-	border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin: 5px 15px;
+    border-radius: 50%;
     /* transform: rotateX(500deg) rotateY(500deg); */
 
-	position: relative;
-	background: transparent;
-	box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 10) inset;
+    position: relative;
+    background: transparent;
+    box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 10) inset;
 }
 
 .sphere:after {
-	content: "";
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: -20px;
-	margin: auto;
-	width: 90px;
-	height: 4px;
-	border-radius: 50%;
-	background: #000;
-	filter: blur(4px);
-	z-index: -1;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -20px;
+    margin: auto;
+    width: 90px;
+    height: 4px;
+    border-radius: 50%;
+    background: #000;
+    filter: blur(4px);
+    z-index: -1;
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -150,7 +150,8 @@
     align-items: center;
     justify-content: space-around;
 }
-.bottom_dice_box{
+
+.bottom_dice_box {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -160,40 +161,93 @@
 .start_button {
     display: inline-block;
     padding: 0.8em 3em;
-    background-color: #e3364a; /* 背景色 */
-    box-shadow: 0 5px 0 #ca1c30; /* 影の太さ・色 */
+    background-color: #e3364a;
+    /* 背景色 */
+    box-shadow: 0 5px 0 #ca1c30;
+    /* 影の太さ・色 */
     border-radius: 60px;
     border-color: transparent;
     color: #fff;
     cursor: pointer;
-    text-decoration: none; /* 文字の下線を消す */
+    text-decoration: none;
+    /* 文字の下線を消す */
     max-width: 200px;
     margin-top: 80px;
-  }
+}
 
- .start_button:active {
+.start_button:active {
     box-shadow: none;
     transform: translateY(5px);
-} 
+}
+
+.start_button:disabled {
+    pointer-events: none;
+    background-color: gray;
+    box-shadow: none;
+    transform: translateY(5px);
+}
+
+.button_box {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 10px;
+}
 
 .cpu1,
 .cpu2 {
-     /* border:1px solid #333;
+    /* border:1px solid #333;
      padding:10px 50px;
      border-radius: 4px; */
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-     background-image: url('../images/robot.png');
-     width: 300px;
-     height: 300px;
-     background-size:cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url(../../public/images/robot.png);
+    width: 300px;
+    height: 300px;
+    background-size: cover;
 }
+
 .cpu1 div {
-    border:1px solid #333;
-    padding:10px 50px;
+    border: 1px solid #333;
+    padding: 10px 50px;
     border-radius: 4px;
     margin-top: 100px;
     background-color: white;
+    gap: 4px;
+    display: flex;
+}
+
+.modal_container {
+    position: absolute;
+    bottom: 50%;
+    z-index: 999;
+    align-items: center;
+    /* テキストの中央揃え */
+    background: rgba(0, 0, 0, .5);
+    /* マスクの色(黒の50%) */
+    bottom: 0;
+    color: #fff;
+    /* テキストの色 */
+    display: flex;
+    /* テキストの中央揃え */
+    height: auto;
+    justify-content: center;
+    /* テキストの中央揃え */
+    left: 0;
+    opacity: 1;
+    /* 最初は透明(非表示) */
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity .6s ease;
+    /* ゆっくりopacityのみへ変化させる */
+    width: 100%;
+}
+
+img {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(0, 0, 0, 10);
 }
