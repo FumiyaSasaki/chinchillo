@@ -9,29 +9,33 @@ export namespace ChinchilloApi {
         const firstDice: number = getRandomInt(1, 7);
         const secondDice: number = getRandomInt(1, 7);
         const thirdDice: number = getRandomInt(1, 7);
-        let diceRoll = ''
-        let diceResult = 0;
+        let resultMessage = ''
+        let diceResult = { result: 0, rate: 1 };
         if (firstDice === 1 && secondDice === 1 && thirdDice === 1) {
-            diceRoll = '出目はピンゾロ';
-            diceResult = 9
+            resultMessage = '出目はピンゾロ';
+            diceResult = { result: 9, rate: 5 };
         } else if (firstDice === secondDice && secondDice === thirdDice && thirdDice === firstDice) {
-            diceRoll = `出目は${firstDice}のゾロ目！`;
-            diceResult = 8;
+            resultMessage = `出目は${firstDice}のゾロ目`;
+            diceResult = { result: 8, rate: 3 };
         } else if (firstDice !== secondDice && secondDice !== thirdDice && firstDice + secondDice + thirdDice === 15) {
-            diceRoll = '出目はシゴロ'
-            diceResult = 7
+            resultMessage = '出目はシゴロ'
+            diceResult = { result: 7, rate: 2 }
         } else if (firstDice === secondDice && secondDice !== thirdDice) {
-            diceResult = thirdDice;
+            resultMessage = `出目は${thirdDice}`;
+            diceResult = { result: thirdDice, rate: 1 };
         } else if (secondDice === thirdDice && thirdDice !== firstDice) {
-            diceResult = firstDice;
+            resultMessage = `出目は${firstDice}`;
+            diceResult = { result: firstDice, rate: 1 };
         } else if (thirdDice === firstDice && firstDice !== secondDice) {
-            diceResult = secondDice;
+            resultMessage = `出目は${secondDice}`;
+            diceResult = { result: secondDice, rate: 1 };
         } else if (firstDice !== secondDice && firstDice !== thirdDice && secondDice !== thirdDice && firstDice + secondDice + thirdDice === 6) {
-            // diceRoll = '出目はヒフミ！';
-            diceResult = -1
+            resultMessage = '出目はヒフミ';
+            diceResult = { result: -1, rate: -1 };
         } else {
-            diceResult = 0;
+            resultMessage = '出目無し';
+            diceResult = { result: 0, rate: 1 };
         }
-        return { diceResult, firstDice, secondDice, thirdDice };
+        return { diceResult, resultMessage, firstDice, secondDice, thirdDice };
     };
 }

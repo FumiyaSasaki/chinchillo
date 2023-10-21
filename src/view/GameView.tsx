@@ -45,16 +45,42 @@ export const GameView = () => {
     return transformStyles;
   };
 
+  const [myPoint, setMyPoint] = useState<number>(10);
+  const [latch, setLatch] = useState<number>(1);
+  const [resultDiceRollText, setResultDiceRollText] = useState<string>('');
+  const [diceRollcount, setDiceRollCount] = useState<number>(1);
+
   const onPressStartDiceRoll = () => {
-    const diceRoll = ChinchilloApi.getDiceRoll();
-    setCpu1Result(ChinchilloApi.getDiceRoll().diceResult);
-    setCpu2Result(ChinchilloApi.getDiceRoll().diceResult);
-    setFirstDice(getOrderNumbers(diceRoll.firstDice));
-    setSecondDice(getOrderNumbers(diceRoll.secondDice));
-    setThirdDice(getOrderNumbers(diceRoll.thirdDice));
-    setresult(diceRoll.diceResult);
+    setResultDiceRollText('');
+    if (diceRollcount === 3) {
+      setDiceRollCount(1);
+    } else {
+      setDiceRollCount(prev => prev + 1);
+    }
+    const { diceResult, firstDice, secondDice, thirdDice, resultMessage } = ChinchilloApi.getDiceRoll();
+    const cpu1DiceResult: number = ChinchilloApi.getDiceRoll().diceResult.result;
+    const cpu2DiceResult: number = ChinchilloApi.getDiceRoll().diceResult.result;
+    const resultNumbers: number[] = [diceResult.result, cpu1DiceResult, cpu2DiceResult];
+    const maxDiceResult: number = Math.max(...resultNumbers);
+    setCpu1Result(cpu1DiceResult);
+    setCpu2Result(cpu2DiceResult);
+    setFirstDice(getOrderNumbers(firstDice));
+    setSecondDice(getOrderNumbers(secondDice));
+    setThirdDice(getOrderNumbers(thirdDice));
     setAnimation(`${styles.dice} ${styles.dice_anime2}`);
     setTimeout(() => {
+      if (diceRollcount === 3) {
+        if (resultNumbers.every(result => result === maxDiceResult)) {
+          setResultDiceRollText('引き分け：' + resultMessage);
+        } else if (diceResult.result === maxDiceResult) {
+          setMyPoint(prev => prev + (latch * diceResult.rate));
+          setResultDiceRollText('勝利：' + resultMessage);
+        } else {
+          setMyPoint(prev => prev - (latch * diceResult.rate));
+          setResultDiceRollText('敗北：' + resultMessage);
+        }
+        setresult(diceResult.result);
+      }
       setAnimation(`${styles.dice}`);
     }, 2000);
   };
@@ -102,7 +128,12 @@ export const GameView = () => {
         </div>
       </div>
       <button className={styles.start_button} onClick={onPressStartDiceRoll}>DICE ROLL</button>
+      <p>{myPoint}</p>
+      <p>{latch}</p>
+      <div>{resultDiceRollText}{diceRollcount}</div>
     </div>
+    <button className={styles.start_button} onClick={() => setLatch(prev => prev + 1)}>UP</button>
+    <button className={styles.start_button} onClick={() => setLatch(prev => prev - 1)}>DOWN</button>
   </>);
 }
 
