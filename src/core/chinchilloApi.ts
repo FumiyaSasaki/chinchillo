@@ -1,3 +1,5 @@
+import { Dice, DiceRollResult } from "../tepes/type";
+
 export namespace ChinchilloApi {
     const getRandomInt = (min: number, max: number) => {
         min = Math.ceil(min);
@@ -5,10 +7,10 @@ export namespace ChinchilloApi {
         return Math.floor(Math.random() * (max - min) + min);
     };
 
-    export const getDiceRoll = () => {
-        const firstDice: number = getRandomInt(1, 7);
-        const secondDice: number = getRandomInt(1, 7);
-        const thirdDice: number = getRandomInt(1, 7);
+    export const getDiceRoll = (): DiceRollResult => {
+        const firstDice: Dice = getRandomInt(1, 7) as Dice;
+        const secondDice: Dice = getRandomInt(1, 7) as Dice;
+        const thirdDice: Dice = getRandomInt(1, 7) as Dice;
         let resultMessage = ''
         let diceResult = { result: 0, rate: 1 };
         if (firstDice === 1 && secondDice === 1 && thirdDice === 1) {
