@@ -246,6 +246,50 @@
     width: 100%;
 }
 
+.modal_box {
+    padding: 20px 60px;
+    border: 1px solid rgba(0, 0, 0, 10);
+    border-radius: 4px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_box p {
+    color: black;
+}
+
+.modal_box button {
+    display: inline-block;
+    padding: 0.8em 3em;
+
+    /* box-shadow: 0 5px 0 #ca1c30; */
+
+    border-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    /* max-width: 200px; */
+    /* margin-top: 80px; */
+    border: 2px solid #494848;
+    border-radius: 4px;
+    background: #fff;
+    color: black;
+}
+
+a.btn-border {
+    border: 2px solid #000;
+    border-radius: 0;
+    background: #fff;
+  }
+  
+  .modal_box button:hover {
+    color: #fff;
+    background: #494848;
+  }
+
 img {
     width: 20px;
     height: 20px;
