@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { ChinchilloApi } from '../core/chinchilloApi';
 import styles from '../styles/game.module.css';
-import { Form } from 'react-bootstrap';
-import { Cpu, DiceNumber, Dice, DiceRollResult, TransformStyle, initialCpu, initialDiceRollResult } from '../tepes/type';
-import { TransformStyles, getOrderNumbers } from '../helper/gameViewHelper';
+import { Cpu, Dice, DiceRollResult, TransformStyle, initialDiceRollResult } from '../tepes/type';
+import { getOrderNumbers } from '../helper/gameViewHelper';
 import { DiceDisplay } from '../components/DiceDisplay';
 import { CpuDisplay } from '../components/CpuDisplay';
+
+const GameMaxCount = 5;
 
 export const GameView = () => {
   const [animation, setAnimation] = useState<string>(`${styles.dice}`);
@@ -60,7 +59,7 @@ export const GameView = () => {
         }
         setGameCount(prev => prev + 1);
       } else {
-        setResultDiceRollText('もう一度回してください！');
+        setResultDiceRollText('もう一度回してください');
       }
       setAnimation(`${styles.dice}`);
       setDisabled(false);
@@ -71,14 +70,15 @@ export const GameView = () => {
     setMyPoint(10);
     setResultDiceRollText('');
     setGameCount(0);
+    setLatch(1);
   };
 
   return (<>
     <div className={styles.container}>
-      {(gameCount === 2 || myPoint <= 0) &&
+      {(gameCount === GameMaxCount || myPoint <= 0) &&
         <dialog open className={styles.modal_container}>
           <div className={styles.modal_box}>
-            <p>ゲーム終了しました</p>
+            <p>{myPoint <= 0 ? 'ゲームオーバーです' : 'ゲーム終了しました'}</p>
             <p>最終得点は{myPoint}です</p>
             <button onClick={onPressRestartGame}>もう一度最初から</button>
           </div>
@@ -97,12 +97,12 @@ export const GameView = () => {
         <button className={styles.start_button} onClick={() => setLatch(prev => prev + 1)} disabled={disabled || myPoint === latch}>UP</button>
         <button className={styles.start_button} onClick={() => setLatch(prev => prev - 1)} disabled={disabled || latch === 1}>DOWN</button>
       </div>
-      <p>現在のポイント：{myPoint}</p>
-      <p>賭けポイント：{latch}</p>
+      <div className={styles.point_box}>
+        <p>現在のポイント：{myPoint}</p>
+        <p>賭けポイント：{latch}</p>
+        <p>残りゲーム数：{GameMaxCount - gameCount}</p>
+      </div>
       <div>{resultDiceRollText}</div>
     </div>
-
-
   </>);
 }
-

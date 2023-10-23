@@ -6,7 +6,8 @@ export const CpuDisplay = React.memo(({
 }: {
     diceNumbers: Dice[]
 }) => {
-    return (<div className={styles.cpu1}>
+    return (<div className={styles.cpu}>
+        <p>cpu</p>
         <div className={styles.cpu_result}>
             {diceNumbers.length > 0 ? <>
                 <img src={`../images/${DiceNumber[diceNumbers[0]]}_dice.png`} alt="" />

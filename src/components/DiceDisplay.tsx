@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import styles from '../styles/game.module.css';
 import { TransformStyle } from '../tepes/type';
 export const DiceDisplay = React.memo(({

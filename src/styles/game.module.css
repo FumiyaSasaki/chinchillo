@@ -1,7 +1,8 @@
 .container {
     display: flex;
-    flex-direction: row;
-    position: relative;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
 }
 
 .dice {
@@ -11,14 +12,8 @@
     width: 100px;
     height: 100px;
     transform-style: preserve-3d;
-    /* transform: rotate3d(-1000, -1000, -1000, 1000deg); */
     transform: rotateX(500deg) rotateY(-500deg);
-    /* transform:rotateX(-500deg) rotateY(-500deg) rotateZ(720deg); */
-
-    /* animation: rotate-animation 2s linear; */
-
     animation-fill-mode: forwards;
-    /* animation-iteration-count: 2; */
 }
 
 .dice_anime {
@@ -82,24 +77,8 @@
     0% {
         transform: rotate3d(0, 0, 0, 0deg);
     }
-
-    /* 50% {
-        transform: rotate3d(-1000, -1000, -1000, 0deg);
-    } */
-
     100% {
-        /* transform: rotate3d(-1000, -1000, -1000, 0deg); */
         transform: rotateX(500deg) rotateY(-500deg);
-    }
-}
-
-@keyframes rotate-animation2 {
-    from {
-        transform: rotate3d(0);
-    }
-
-    to {
-        transform: rotate3d(-1000, -1000, -1000, 0deg);
     }
 }
 
@@ -111,8 +90,6 @@
     height: 200px;
     margin: 5px 15px;
     border-radius: 50%;
-    /* transform: rotateX(500deg) rotateY(500deg); */
-
     position: relative;
     background: transparent;
     box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 10) inset;
@@ -131,16 +108,6 @@
     background: #000;
     filter: blur(4px);
     z-index: -1;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* background-image: url('../109403972_p0_master1200.jpg');
-    background-size:contain;
-    height: 450px;
-    width: 650px; */
 }
 
 .top_dice_box {
@@ -194,11 +161,7 @@
     margin: 10px;
 }
 
-.cpu1,
-.cpu2 {
-    /* border:1px solid #333;
-     padding:10px 50px;
-     border-radius: 4px; */
+.cpu {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -209,14 +172,22 @@
     background-size: cover;
 }
 
-.cpu1 div {
+.cpu div {
     border: 1px solid #333;
-    padding: 10px 50px;
+    padding: 10px 20px;
     border-radius: 4px;
-    margin-top: 100px;
+    margin-top: 70px;
     background-color: white;
     gap: 4px;
     display: flex;
+    min-width: 100px;
+}
+
+.cpu p {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 26px;
 }
 
 .modal_container {
@@ -224,25 +195,17 @@
     bottom: 50%;
     z-index: 999;
     align-items: center;
-    /* テキストの中央揃え */
     background: rgba(0, 0, 0, .5);
-    /* マスクの色(黒の50%) */
     bottom: 0;
     color: #fff;
-    /* テキストの色 */
     display: flex;
-    /* テキストの中央揃え */
     height: auto;
     justify-content: center;
-    /* テキストの中央揃え */
     left: 0;
     opacity: 1;
-    /* 最初は透明(非表示) */
     position: absolute;
     right: 0;
     top: 0;
-    transition: opacity .6s ease;
-    /* ゆっくりopacityのみへ変化させる */
     width: 100%;
 }
 
@@ -264,15 +227,10 @@
 .modal_box button {
     display: inline-block;
     padding: 0.8em 3em;
-
-    /* box-shadow: 0 5px 0 #ca1c30; */
-
     border-color: transparent;
     color: #fff;
     cursor: pointer;
     text-decoration: none;
-    /* max-width: 200px; */
-    /* margin-top: 80px; */
     border: 2px solid #494848;
     border-radius: 4px;
     background: #fff;
@@ -283,15 +241,21 @@ a.btn-border {
     border: 2px solid #000;
     border-radius: 0;
     background: #fff;
-  }
-  
-  .modal_box button:hover {
+}
+
+.modal_box button:hover {
     color: #fff;
     background: #494848;
-  }
+}
 
 img {
     width: 20px;
     height: 20px;
     border: 1px solid rgba(0, 0, 0, 10);
+}
+
+.point_box {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
