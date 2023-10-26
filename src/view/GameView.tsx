@@ -79,7 +79,7 @@ export const GameView = () => {
         <dialog open className={styles.modal_container}>
           <div className={styles.modal_box}>
             <p>{myPoint <= 0 ? 'ゲームオーバーです' : 'ゲーム終了しました'}</p>
-            <p>最終得点は{myPoint}です</p>
+            <p>最終得点は{myPoint}です!</p>
             <button onClick={onPressRestartGame}>もう一度最初から</button>
           </div>
         </dialog>}
